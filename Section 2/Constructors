@@ -1,0 +1,144 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+
+class Car
+{
+public:
+    Car();    // default constructor
+    Car(string ma, int mi, int w, int ts);
+    Car(string ma, int m, int w);
+    Car(int m, int w);
+
+    void move();
+    void stop();
+    
+    int getMileage();   // getter
+    int getWeight();       // getter
+    int getManufacturer();   // getter
+    int getTopSpeed();       // getter
+    
+    void setMileage(int x);    // setter
+    void setWeight(int x);        // setter
+    void setManufacturer(string x);    // setter
+    void setTopSpeed(int x);        // setter
+    
+    void outputDetails();
+
+private:
+    string manufacturer;
+    int mileage, weight, topSpeed;
+};
+
+Car::Car()
+{
+    manufacturer = "";
+    mileage = 0;
+    weight = 0;
+    topSpeed = 0;
+}
+
+Car::Car(string ma, int mi, int w, int ts)
+{
+    manufacturer = ma;
+    mileage = m;
+    weight = w;
+    topSpeed = ts;
+}
+
+Car::Car(string ma, int m, int w)
+{
+    mileage = m;
+    weight = w;
+    manufacturer = ma;
+    topSpeed = 0;
+}
+
+Car::Car(int m, int w)
+{
+    mileage = m;
+    weight = w;
+    manufacturer = "";
+    topSpeed = 0;
+}
+
+void Car::move()
+{
+    cout << "Car is moving" << endl;
+}
+
+void Car::stop()
+{
+    cout << "Car is stopping" << endl;
+}
+
+int Car::getMileage()
+{
+    return mileage;
+}
+
+int Car::getWeight()
+{
+    return weight;
+}
+
+int Car::getManufacturer()
+{
+    return manufacturer;
+}
+
+int Car::getTopSpeed()
+{
+    return topSpeed;
+}
+
+void Car::setMileage(int x)
+{
+    mileage = x;
+}
+
+void Car::setWeight(int x)
+{
+    weight = x;
+}
+
+void Car::setManufacturer(string x)
+{
+    manufacturer = x;
+}
+
+void Car::setTopSpeed(int x)
+{
+    topSpeed = x;
+}
+
+void Car::outputDetails(ostream& out)
+{
+    out << "Car Details: " << endl;
+    out << "Manufacturer: " << getManufacturer() << endl;
+    out << "Top Speed: " << getTopSpeed() << endl;
+    out << "Mileage: " << getMileage() << endl;
+    out << "Weight: " << getWeight() << endl;
+}
+
+int main()
+{
+    Car c1(900, 1000);
+    c1.outputDetails(cout);
+    
+    ofstream outStream("output.txt);
+    
+    Car c2(700, 1200);
+    c2.outputDetails(cout);
+    
+    Car c3("Ferrari", 0, 1200, 200);
+    c3.outputDetails(cout);
+    
+    Car c4;  // default constructor is called here 
+    c4.outputDetails(cout);
+    
+    c3 = Car("Tesla", 500, 1200, 150);  // explicit call to constructor
+    c3.outputDetails(cout);
+
+    return 0;
+}
