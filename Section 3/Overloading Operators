@@ -1,0 +1,217 @@
+#include <iostream>
+using namespace std;
+
+int digitToInt(char c)
+{
+	return (static_cast<int>(c) - static_cast<int>('0'));
+}
+
+class Money
+{
+public:
+	Money();
+	Money(double dollars);
+	Money(long dollars, int cents);
+
+	friend Money operator +(const Money& amount1, const Money& amount2);
+	friend Money operator -(const Money& amount1, const Money& amount2);
+	friend bool operator ==(const Money& amount1, const Money& amount2);
+	friend Money operator -(const Money& amount);
+	friend Money operator ++(const Money& amount);
+	friend Money operator --(const Money& amount);
+	friend istream& operator >>(istream& ins, Money& amount);
+	friend ostream& operator <<(ostream& outs, const Money& amount);
+
+	double getValue() const;
+
+
+	void input(istream& ins);
+	void output(ostream& outs) const;
+
+private:
+	long allCents;
+};
+
+
+// constructors
+Money::Money(long dollars, int cents)
+{
+	if (dollars * cents < 0) //If one is negative and one is positive
+	{
+		cout << "Illegal values for dollars and cents.\n";
+		exit(1);
+	}
+	allCents = dollars * 100 + cents;
+}
+Money::Money(double dollars) : allCents(dollars * 100)
+{
+
+}
+Money::Money() : allCents(0)
+{
+
+}
+
+
+// overloaded operators
+Money operator +(const Money& amount1, const Money& amount2)
+{
+	Money temp;
+	temp.allCents = amount1.allCents + amount2.allCents;
+	return temp;
+}
+Money operator -(const Money& amount1, const Money& amount2)
+{
+	Money temp;
+	temp.allCents = amount1.allCents - amount2.allCents;
+	return temp;
+}
+bool operator ==(const Money& amount1, const Money& amount2)
+{
+	return (amount1.allCents == amount2.allCents);
+}
+Money operator -(const Money& amount)
+{
+	Money temp;
+	temp.allCents = -amount.allCents;
+	return temp;
+}
+Money operator ++(const Money& amount)
+{
+	Money temp;
+	temp.allCents = amount.allCents + 100;
+	return temp;
+}
+Money operator --(const Money& amount)
+{
+	Money temp;
+	temp.allCents = amount.allCents - 100;
+	return temp;
+}
+istream& operator >>(istream& ins, Money& amount)
+{
+	char oneChar, decimalPoint, digit1, digit2; //digits for the amount of cents
+	long dollars;
+	int cents;
+	bool negative;//set to true if input is negative.
+	ins >> oneChar;
+	if (oneChar == '-')
+	{
+		negative = true;
+		ins >> oneChar; //read '$'
+	}
+	else
+		negative = false;
+	//if input is legal, then oneChar == '$'
+	ins >> dollars >> decimalPoint >> digit1 >> digit2;
+	if (oneChar != '$' || decimalPoint != '.'
+		|| !isdigit(digit1) || !isdigit(digit2))
+	{
+		cout << "Error illegal form for money input\n";
+		exit(1);
+	}
+	cents = digitToInt(digit1) * 10 + digitToInt(digit2);
+	amount.allCents = dollars * 100 + cents;
+	if (negative)
+		amount.allCents = -amount.allCents;
+	return ins;
+}
+ostream& operator <<(ostream& outs, const Money& amount)
+{
+	long positiveCents, dollars, cents;
+	positiveCents = labs(amount.allCents);
+	dollars = positiveCents / 100;
+	cents = positiveCents % 100;
+
+	if (amount.allCents < 0)
+		outs << "- $" << dollars << '.';
+	else
+		outs << "$" << dollars << '.';
+
+	if (cents < 10)
+		outs << '0';
+	outs << cents;
+
+	return outs;
+}
+
+
+double Money::getValue() const
+{
+	return (allCents * 0.01);
+}
+void Money::input(istream& ins)
+{
+	char oneChar, decimalPoint, digit1, digit2;
+
+	long dollars;
+	int cents;
+	bool negative;	//set to true if input is negative.
+
+	ins >> oneChar;
+	if (oneChar == ' ')
+	{
+		negative = true;
+		ins >> oneChar; //read '$'
+	}
+	else
+		negative = false;
+	//if input is legal, then oneChar == '$'
+
+	ins >> dollars >> decimalPoint >> digit1 >> digit2;
+
+	if (oneChar != '$' || decimalPoint != '.'
+		|| !isdigit(digit1) || !isdigit(digit2))
+	{
+		cout << "Error illegal form for money input\n";
+		exit(1);
+	}
+	cents = digitToInt(digit1) * 10 + digitToInt(digit2);
+
+	allCents = dollars * 100 + cents;
+	if (negative)
+		allCents = -allCents;
+}
+void Money::output(ostream& outs) const
+{
+	long positiveCents, dollars, cents;
+	positiveCents = labs(allCents);
+	dollars = positiveCents / 100;
+	cents = positiveCents % 100;
+
+	if (allCents < 0)
+		outs << "-$" << dollars << '.';
+	else
+		outs << "$" << dollars << '.';
+
+	if (cents < 10)
+		outs << '0';
+	outs << cents << endl;
+}
+
+
+int main()
+{
+	Money cost(1, 50), tax(0, 15), total;
+	total = cost + tax;
+	
+	
+	cout << "cost = ";
+	cost.output(cout);
+	cout << endl;
+	cout << "tax = ";
+	tax.output(cout);
+	cout << endl;
+	cout << "total bill = ";
+	total.output(cout);
+	cout << endl;
+
+	
+	if (cost == tax)
+		cout << "Move to another state.\n";
+	else
+		cout << "Things seem normal.\n";
+
+
+	return 0;
+}
