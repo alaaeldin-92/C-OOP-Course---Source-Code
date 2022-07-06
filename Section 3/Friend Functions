@@ -1,0 +1,16 @@
+#include <iostream>
+using namespace std;
+
+class Calendar
+{
+
+};
+
+int main()
+{
+    Calendar obj1(14, 12, 2022), obj2(14, 12, 2022);
+    
+    cout << equal(obj1, obj2);
+
+    return 0;
+}
