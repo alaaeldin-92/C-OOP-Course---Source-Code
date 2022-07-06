@@ -1,0 +1,68 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+class Rectangle
+{
+public:
+
+    Rectangle()
+    {
+        length = 0;
+        width = 0;
+    }
+
+    double perimeter() { return 2 * (length + width); }
+    double area() { return length * width; }
+
+    double getLength() { return length; }
+    double getWidth() { return width; }
+
+    void setLength(double x) { length = x; }
+    void setWidth(double x) { width = x; }
+
+private:
+    double length, width;
+};
+
+int main()
+{
+    ifstream inStream("input.txt");
+
+    int n;
+    inStream >> n;
+
+    Rectangle* x = new Rectangle[n];
+
+    for (int i = 0; i < n; i++)
+    {
+        double len;
+        inStream >> len;
+        x[i].setLength(len);
+
+        double wid;
+        inStream >> wid;
+        x[i].setWidth(wid);
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << "Rectangle: " << i + 1 << ":" << endl;
+        cout << "Length: " << x[i].getLength() << ":" << endl;
+        cout << "Width: " << x[i].getWidth() << ":" << endl;
+        cout << "Area: " << x[i].area() << ":" << endl;
+        cout << "Perimeter: " << x[i].perimeter() << ":" << endl << endl;
+    }
+
+    double sumOfAreas = 0, sumOfPerimeters = 0;
+    for (int i = 0; i < n; i++)
+    {
+        sumOfAreas += x[i].area();  
+        sumOfPerimeters += x[i].perimeter();  
+    }
+
+    cout << "Average Area: " << sumOfAreas / n << endl;
+    cout << "Average Perimeter: " << sumOfPerimeters / n << endl;
+
+    return 0;
+}
