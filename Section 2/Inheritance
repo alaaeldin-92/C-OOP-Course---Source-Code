@@ -1,0 +1,120 @@
+#include<iostream>
+using namespace std;
+
+class Vehicle
+{
+public:
+    Vehicle()    // default constructor
+    {
+        manufacturer = "none";
+        numOfPassengers = 0;
+        weight = 0;
+        topSpeed = 0;
+    }
+
+    Vehicle(string m, int n, int w, int ts)    // 4 parameter constructor
+    {
+        manufacturer = m;
+        numOfPassengers = n;
+        weight = w;
+        topSpeed = ts;
+    }
+
+    void accelerate() { cout << "accelerating" << endl; }
+    void decelerate() { cout << "decelerating" << endl; }
+    void stop() { cout << "stopping" << endl; }
+
+    // accessors/getters and mutators/setters
+    string getManufacturer() { return manufacturer; }
+    void setManufacturer(string m) { manufacturer = m; }
+    int getNumOfPassengers() { return numOfPassengers; }
+    void setNumOfPassengers(int n) { numOfPassengers = n; }
+    int getWeight() { return weight; }
+    void setWeight(int w) { weight = w; }
+    int getTopSpeed() { return topSpeed; }
+    void setTopSpeed(int n) { topSpeed = n; }
+
+    // output
+    void output()
+    {
+        cout << "Manufacturer: " << manufacturer << endl;
+        cout << "Number of Passengers: " << numOfPassengers << endl;
+        cout << "Weight: " << weight << endl;
+        cout << "Top Speed: " << topSpeed << endl << endl;
+    }
+
+private:
+    string manufacturer;
+    int numOfPassengers;
+    int weight;
+    int topSpeed;
+};
+
+
+class Car : public Vehicle
+{
+public:
+    Car() : Vehicle()  // default constructor
+    {
+
+    }
+
+    Car(string m, int n, int w, int ts) : Vehicle(m, n, w, ts)
+    {
+
+    }
+};
+
+
+class Aeroplane : public Vehicle
+{
+public:
+    Aeroplane() : Vehicle()  // default constructor
+    {
+        maxAltitude = 0;
+    }
+
+    Aeroplane(string m, int n, int w, int ts, int ma) : Vehicle(m, n, w, ts)
+    {
+        maxAltitude = ma;
+    }
+
+    // new accessors and mutators
+    int getMaxAltitude() { return maxAltitude; }
+    void setMaxAltitude(int m) { maxAltitude = m; }
+
+
+private:
+    int maxAltitude;
+};
+
+
+class Bicycle : public Vehicle
+{
+public:
+    Bicycle() : Vehicle()  // default constructor
+    {
+
+    }
+
+    Bicycle(string m, int n, int w, int ts) : Vehicle(m, n, w, ts)
+    {
+
+    }
+
+};
+
+
+int main()
+{
+    Car c1("Ferrari", 2, 1500, 400);
+    c1.output();
+
+    Aeroplane a1("Boeing", 160, 35000, 950, 40000);
+    a1.output();
+
+    Bicycle b1("Cervelo", 1, 10, 60);
+    b1.output();
+
+    return 0;
+}
