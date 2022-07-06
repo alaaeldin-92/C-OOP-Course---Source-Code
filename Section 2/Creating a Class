@@ -7,14 +7,14 @@ class Car
 public:
     void move();
     void stop();
-    
+
     double getMileage();   // getter
     int getWeight();       // getter
-    
+
     void setMileage(double x);    // setter
     void setWeight(int x);        // setter
-    
-    void outputDetails();
+
+    void outputDetails(ostream& out);
 
 private:
     double mileage;
@@ -64,9 +64,9 @@ int main()
     c1.setMileage(900);
     c1.setWeight(1000);
     c1.outputDetails(cout);
-    
-    ofstream outStream("output.txt);
-    
+
+    ofstream outStream("output.txt");
+
     Car c2;
     c2.setMileage(700);
     c2.setWeight(1200);
