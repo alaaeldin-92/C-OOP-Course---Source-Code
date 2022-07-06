@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+
+class Rectangle
+{
+public:
+
+    Rectangle()
+    {
+        length = 0;
+        width = 0;
+    }
+
+    double perimeter() { return 2 * (length + width); }
+    double area() { return length * width; }
+
+    double getlength() { return length; }
+    double getwidth() { return width; }
+
+    void setlength(double x) { length = x; }
+    void setwidth(double x) { width = x; }
+
+    void outputDetails()
+    {
+        cout << "length: " << getlength() << endl;
+        cout << "width: " << getwidth() << endl;
+    }
+
+private:
+    double length, width;
+};
+
+int main()
+{
+    Rectangle obj;
+    obj.outputDetails();
+
+    double l, w;
+    cout << "Enter the length: ";
+    cin >> l;
+    obj.setlength(l);
+    cout << "Enter the width: ";
+    cin >> w;
+    obj.setwidth(w);
+    obj.outputDetails();
+
+    cout << "Area: " << obj.area() << endl;
+    cout << "Perimeter: " << obj.perimeter() << endl;
+
+    return 0;
+}
