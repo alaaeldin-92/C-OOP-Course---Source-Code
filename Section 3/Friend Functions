@@ -3,14 +3,42 @@ using namespace std;
 
 class Calendar
 {
+public:
+    Calendar() { day = 0; month = 0; year = 0; }
+    Calendar(int d, int m, int y) { day = d; month = m; year = y; }
 
+    friend bool equal(const Calendar c1, const Calendar c2);
+
+    double getDay() { return day; } const 
+    double getMonth() { return month; } const 
+    double getYear() { return year; } const
+    void setDay(int x) { day = x; }
+    void setMonth(int x) { month = x; }
+    void setYear(int x) { year = x; }
+
+    void output() 
+    { 
+        cout << "Day: " << day << "" << "\nMonth" << month << "\nYear" << year; 
+    }
+
+private:
+    int day, month, year;
 };
+
+
+bool equal(const Calendar c1, const Calendar c2)
+{
+    return c1.day == c2.day && c1.month == c2.month && c1.year == c2.year;
+}
+
 
 int main()
 {
     Calendar obj1(14, 12, 2022), obj2(14, 12, 2022);
-    
+
     cout << equal(obj1, obj2);
 
     return 0;
 }
+
+
